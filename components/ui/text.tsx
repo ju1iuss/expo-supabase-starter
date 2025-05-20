@@ -3,6 +3,7 @@ import type { SlottableTextProps, TextRef } from "@rn-primitives/types";
 import * as React from "react";
 import { Text as RNText } from "react-native";
 import { cn } from "@/lib/utils";
+import { fontFamily } from "@/config/fonts";
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
@@ -17,6 +18,7 @@ const Text = React.forwardRef<TextRef, SlottableTextProps>(
 					textClass,
 					className,
 				)}
+				style={{ fontFamily: fontFamily.geistRegular }}
 				ref={ref}
 				{...props}
 			/>

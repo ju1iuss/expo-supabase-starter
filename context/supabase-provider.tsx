@@ -18,6 +18,7 @@ type AuthState = {
 	session: Session | null;
 	signUp: (email: string, password: string) => Promise<void>;
 	signIn: (email: string, password: string) => Promise<void>;
+	signInWithApple: (idToken: string) => Promise<void>;
 	signOut: () => Promise<void>;
 };
 
@@ -26,6 +27,7 @@ export const AuthContext = createContext<AuthState>({
 	session: null,
 	signUp: async () => {},
 	signIn: async () => {},
+	signInWithApple: async () => {},
 	signOut: async () => {},
 });
 
@@ -44,7 +46,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
 		if (error) {
 			console.error("Error signing up:", error);
-			return;
+			throw error;
 		}
 
 		if (data.session) {
@@ -52,6 +54,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			console.log("User signed up:", data.user);
 		} else {
 			console.log("No user returned from sign up");
+			// Many providers send a confirmation email first
+			throw new Error("Please check your email to confirm your account.");
 		}
 	};
 
@@ -63,7 +67,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
 		if (error) {
 			console.error("Error signing in:", error);
-			return;
+			throw error;
 		}
 
 		if (data.session) {
@@ -71,6 +75,27 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			console.log("User signed in:", data.user);
 		} else {
 			console.log("No user returned from sign in");
+			throw new Error("Unable to sign in. Please try again later.");
+		}
+	};
+
+	const signInWithApple = async (idToken: string) => {
+		const { data, error } = await supabase.auth.signInWithIdToken({
+			provider: 'apple',
+			token: idToken,
+		});
+
+		if (error) {
+			console.error("Error signing in with Apple:", error);
+			throw error;
+		}
+
+		if (data.session) {
+			setSession(data.session);
+			console.log("User signed in with Apple:", data.user);
+		} else {
+			console.log("No user returned from Apple sign in");
+			throw new Error("Unable to sign in with Apple. Please try again later.");
 		}
 	};
 
@@ -79,7 +104,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
 		if (error) {
 			console.error("Error signing out:", error);
-			return;
+			throw error;
 		} else {
 			console.log("User signed out");
 		}
@@ -116,6 +141,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				session,
 				signUp,
 				signIn,
+				signInWithApple,
 				signOut,
 			}}
 		>

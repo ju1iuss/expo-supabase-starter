@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "ExpoSupabaseStarter",
-    "slug": "ExpoSupabaseStarter",
-    "scheme": "expo-supabase-starter",
+    "name": "Doomscroller",
+    "slug": "doomscroller",
+    "scheme": "doomscroller",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -30,7 +30,8 @@
         "dark": "./assets/icon-dark.png",
         "light": "./assets/icon.png"
       },
-      "bundleIdentifier": "com.flemingvincent.ExpoSupabaseStarter"
+      "bundleIdentifier": "com.doomscroller.app",
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
@@ -45,14 +46,22 @@
           "resizeMode": "cover",
           "image": "./assets/splash-dark.png"
         }
-      }
+      },
+      "package": "com.doomscroller.app"
     },
     "experiments": {
       "typedRoutes": true
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
-    ]
+      "expo-secure-store",
+      "expo-apple-authentication"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "18948109-1d3b-4695-9c96-65a70e21667d"
+      }
+    }
   }
 }

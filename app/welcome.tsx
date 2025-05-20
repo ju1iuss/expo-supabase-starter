@@ -18,24 +18,30 @@ export default function WelcomeScreen() {
 			: require("@/assets/icon-dark.png");
 
 	return (
-		<SafeAreaView className="flex flex-1 bg-background p-4">
-			<View className="flex flex-1 items-center justify-center gap-y-4 web:m-4">
-				<Image source={appIcon} className="w-16 h-16 rounded-xl" />
-				<H1 className="text-center">Welcome to Expo Supabase Starter</H1>
-				<Muted className="text-center">
-					A comprehensive starter project for developing React Native and Expo
-					applications with Supabase as the backend.
+		<SafeAreaView className="flex flex-1 bg-background p-6">
+			<View className="flex flex-1 items-center justify-center gap-y-6 web:m-4">
+				<Image 
+					source={appIcon} 
+					className="rounded-xl" 
+					style={{ width: 150, height: 150, marginBottom: 20 }}
+				/>
+				<H1 className="text-center mb-4">Welcome to Doomscroller</H1>
+				<Muted className="text-center mb-6 px-4">
+					Your endless scrolling companion for when you just can't get enough of the void.
+				</Muted>
+				<Muted className="text-center px-4">
+					Sign in with email or Apple account to sync your content across devices.
 				</Muted>
 			</View>
-			<View className="flex flex-col gap-y-4 web:m-4">
+			<View className="flex flex-col gap-y-6 web:m-4 mb-8">
 				<Button
 					size="default"
 					variant="default"
 					onPress={() => {
-						router.push("/sign-up");
+						router.push("/onboarding");
 					}}
 				>
-					<Text>Sign Up</Text>
+					<Text>Get Started</Text>
 				</Button>
 				<Button
 					size="default"
